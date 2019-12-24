@@ -17,7 +17,6 @@ cont = search_cont[0]
 
 # out_filename = "for_journal_club.csv"
 # headers = "search_keyword, article_name, author, summary, url_link, Number_of_citations  \n"
-
 # opens file, and writes headers
 # f = open(out_filename, "w")
 # f.write(headers)
