@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
 import re
-# import csv
 
 out_filename = "for_journal_club.csv"
 f = open(out_filename, "w", encoding='utf-8-sig')
@@ -10,19 +9,18 @@ headers = "search_keyword, article_name, author, summary, url_link, Number_of_ci
 f.write(headers)
 
 for i in range(5):
+    # for the number of pages to scraped
     page_url = "https://scholar.google.com/scholar?start={}&q=deep+learning+in+neural+networks&hl=en&as_sdt=400007".format(i)
-    # page_url = "https://scholar.google.com/scholar?hl=en&as_sdt=0%2C14&q=deep+learning+in+neural+networks&oq="
     r = requests.get(page_url)
     souped = BeautifulSoup(r.text, 'html.parser')
-    # print(souped.prettify())
+    # inspect elements from the webpage to locate
     containers = souped.findAll("div", {"class": "gs_r gs_or gs_scl"})
-    # search_cont = souped.findAll("div", {"class":"gs_in_txtw gs_in_txtb gs_in_acw"})
     search_cont = souped.findAll("div", {"id": "gs_hdr_srch"})
-    # container = containers[0]
     cont = search_cont[0]
     search_keyword = cont.form.div.input["value"]
 
     for container in containers:
+        # for number of occurrences of each element type on the webpage
         article_name = container.select("div")[3].h3.a.text
         author = container.select("div")[3].div.a.text
         summary = container.select("div")[3].select("div")[1].text
